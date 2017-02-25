@@ -72,6 +72,8 @@ docs/_build/
 # PyBuilder
 target/
 
+.idea/
+.idea/*
 
 ### Vim ###
 [._]*.s[a-w][a-z]
