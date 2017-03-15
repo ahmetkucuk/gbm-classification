@@ -4,6 +4,8 @@ from __future__ import print_function
 
 import tensorflow as tf
 import os
+import random
+
 
 class ImageReader(object):
 	"""Helper class that provides TensorFlow image coding utilities."""
@@ -18,8 +20,7 @@ class ImageReader(object):
 		return image.shape[0], image.shape[1]
 
 	def decode_jpeg(self, sess, image_data):
-		image = sess.run(self._decode_jpeg,
-						 feed_dict={self._decode_jpeg_data: image_data})
+		image = sess.run(self._decode_jpeg, feed_dict={self._decode_jpeg_data: image_data})
 		assert len(image.shape) == 3
 		assert image.shape[2] == 3
 		return image
@@ -63,7 +64,8 @@ def get_data(dataset_dir):
 		image_reader = ImageReader()
 
 		with tf.Session('') as sess:
-			for i in range(len(filenames)):
+			random.shuffle(filenames)
+			for i in range(500):
 				image_file = tf.gfile.FastGFile(filenames[i], 'r').read()
 				image = image_reader.decode_jpeg(sess, image_file)
 				images.append(image)
@@ -72,6 +74,3 @@ def get_data(dataset_dir):
 				class_id = class_names_to_ids[class_name]
 				labels.append(class_id)
 	return images, labels
-
-if __name__ == "__main__":
-	get_data("/")
