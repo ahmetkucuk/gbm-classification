@@ -162,7 +162,4 @@ class TissueDataset(object):
 			img = Image.fromarray(np.array(image), 'RGB')
 			img.save(output_dir + slide + '_predictions.png')
 
-
-
-
 # train, test = get_datasets(dataset_dir="/Users/ahmetkucuk/Documents/Research/Medical/patches/", image_size=256)
