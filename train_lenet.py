@@ -104,7 +104,7 @@ def train(args):
 	batch_size = int(args[4])
 	epochs = int(args[5])
 	event_file_list_tracker = EventFileListTracker(dataset_dir)
-	n_of_classes = 2
+	n_of_classes = 8
 	iterations = 1
 	while epochs >= 0:
 		with tf.Graph().as_default():
@@ -113,8 +113,8 @@ def train(args):
 			event_file_list_tracker.filter_out_low_probs(slides_predictions)
 			iterations += iter_count
 			epochs -= 2
-# if __name__ == '__main__':
-# 	train(sys.argv[1:])
+if __name__ == '__main__':
+	train(sys.argv[1:])
 
-args = ["/Users/ahmetkucuk/Documents/Research/Medical/patches/", "/Users/ahmetkucuk/Documents/log_test/", 0.01, 32, 20, 20]
-train(args)
+# args = ["/Users/ahmetkucuk/Documents/Research/Medical/patches/", "/Users/ahmetkucuk/Documents/log_test/", 0.01, 32, 20, 20]
+# train(args)
