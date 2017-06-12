@@ -150,7 +150,7 @@ class DataPipeline(object):
 		key, value = reader.read(image_queue)
 
 		my_img = tf.image.decode_jpeg(value)
-		my_img.set_shape([1024, 1024, 3])
+		my_img.set_shape([256, 256, 3])
 		my_img = tf.image.per_image_standardization(my_img)
 
 		self.batched_image = tf.train.batch([my_img], batch_size=batch_size)
