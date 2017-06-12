@@ -19,9 +19,9 @@ def train_by_epochs(data_pipeline, image_size, log_dir, n_of_classes, learning_r
 		network_fn = lenet.lenet
 		batched_image, batched_labels, batched_file_ids, batched_rows, batched_cols = data_pipeline.get_data()
 
-		batched_labels = slim.one_hot_encoding(labels=batched_labels, num_classes=n_of_classes)
+		#batched_labels = slim.one_hot_encoding(labels=batched_labels, num_classes=n_of_classes)
 		batched_image = tf.image.resize_images(batched_image, size=[image_size, image_size])
-		logits, end_points = network_fn(batched_image, num_classes=2, is_training=True)
+		logits, end_points = network_fn(batched_image, num_classes=n_of_classes, is_training=True)
 		predictions = tf.nn.softmax(logits)
 		cross_entropy = tf.reduce_mean(
 			tf.nn.softmax_cross_entropy_with_logits(labels=batched_labels, logits=logits))
