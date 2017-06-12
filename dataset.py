@@ -61,9 +61,22 @@ def get_datasets(dataset_dir, image_size):
 	for i in filenames:
 		data.append(get_image(i))
 		if "/AII/" in i:
-			labels.append([1, 0])
+			labels.append([1, 0, 0, 0, 0, 0, 0, 0])
+		elif "/AIII/" in i:
+			labels.append([0, 1, 0, 0, 0, 0, 0, 0])
+		elif "/OII/" in i:
+			labels.append([0, 0, 1, 0, 0, 0, 0, 0])
+		elif "/OIII/" in i:
+			labels.append([0, 0, 0, 1, 0, 0, 0, 0])
+		elif "/OAII/" in i:
+			labels.append([0, 0, 0, 0, 1, 0, 0, 0])
+		elif "/OAIII/" in i:
+			labels.append([0, 0, 0, 0, 0, 1, 0, 0])
+		elif "/GBM/" in i:
+			labels.append([0, 0, 0, 0, 0, 0, 1, 0])
 		else:
-			labels.append([0, 1])
+			labels.append([0, 0, 0, 0, 0, 0, 0, 1])
+
 	print("Finished Reading images")
 	data = preprocess(data, image_size)
 	metadata = get_metadata(filenames)
