@@ -104,7 +104,7 @@ class EventFileListTracker(object):
 			for position in predictions_by_patch_position.keys():
 				predictions.append([slide, position, predictions_by_patch_position[position]])
 		predictions.sort(key=lambda x: max(x[2]))
-		toberemoved = predictions[0:int(len(predictions)*0.05)]
+		toberemoved = predictions[0:int(len(predictions)*0.01)]
 
 		new_filenames = []
 		new_metadata_labels = []
