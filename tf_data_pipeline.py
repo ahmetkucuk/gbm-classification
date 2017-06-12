@@ -12,12 +12,22 @@ dataset_dir = "/Users/ahmetkucuk/Documents/Research/Medical/patches/"
 
 def get_label_from_filename(filename):
 
-	if "AII" in filename:
+	if "/AII/" in filename:
 		return 0
-	elif "OII" in filename:
+	elif "/AIII/" in filename:
 		return 1
-	else:
+	elif "/OII/" in filename:
 		return 2
+	elif "/OIII/" in filename:
+		return 3
+	elif "/OAII/" in filename:
+		return 4
+	elif "/OAIII/" in filename:
+		return 5
+	elif "/GBM/" in filename:
+		return 6
+	else:
+		return 7
 
 
 def get_metadata(filename):
