@@ -88,8 +88,6 @@ class EventFileListTracker(object):
 		self.metadata_file_ids = [i[1] for i in metadatas]
 		self.metadata_rows = [i[2] for i in metadatas]
 		self.metadata_cols = [i[3] for i in metadatas]
-		print(self.filenames)
-		print(self.metadata_labels)
 
 	def get_data(self):
 		return self.filenames, self.metadata_labels, self.metadata_file_ids, self.metadata_rows, self.metadata_cols
@@ -105,7 +103,6 @@ class EventFileListTracker(object):
 			predictions_by_patch_position = slide_prediction_holders_by_id[slide]
 			for position in predictions_by_patch_position.keys():
 				predictions.append([slide, position, predictions_by_patch_position[position]])
-		print(predictions)
 		predictions.sort(key=lambda x: max(x[2]))
 		toberemoved = predictions[0:int(len(predictions)*0.05)]
 
@@ -153,7 +150,7 @@ class DataPipeline(object):
 		key, value = reader.read(image_queue)
 
 		my_img = tf.image.decode_jpeg(value)
-		my_img.set_shape([256, 256, 3])
+		my_img.set_shape([1024, 1024, 3])
 		my_img = tf.image.per_image_standardization(my_img)
 
 		self.batched_image = tf.train.batch([my_img], batch_size=batch_size)
