@@ -88,6 +88,8 @@ class EventFileListTracker(object):
 		self.metadata_file_ids = [i[1] for i in metadatas]
 		self.metadata_rows = [i[2] for i in metadatas]
 		self.metadata_cols = [i[3] for i in metadatas]
+		print(self.filenames)
+		print(self.metadata_labels)
 
 	def get_data(self):
 		return self.filenames, self.metadata_labels, self.metadata_file_ids, self.metadata_rows, self.metadata_cols
@@ -130,7 +132,6 @@ class EventFileListTracker(object):
 		self.metadata_file_ids = new_metadata_file_ids
 		self.metadata_rows = new_metadata_rows
 		self.metadata_cols = new_metadata_cols
-		print(predictions)
 
 
 class DataPipeline(object):
@@ -152,7 +153,7 @@ class DataPipeline(object):
 		key, value = reader.read(image_queue)
 
 		my_img = tf.image.decode_jpeg(value)
-		my_img.set_shape([1024, 1024, 3])
+		my_img.set_shape([256, 256, 3])
 
 		self.batched_image = tf.train.batch([my_img], batch_size=batch_size)
 
