@@ -65,7 +65,7 @@ class SlidesPredictionHolder(object):
 					image[x][y] = np.max(predictions)
 				else:
 					image[x][y] = 0
-
+			print(heatmap_image)
 			img = Image.fromarray(np.array(image), 'RGB')
 			img.save(os.path.join(output_dir, slide + '_predictions_epochs_' + str(epochs) + '.png'))
 
