@@ -1,12 +1,11 @@
 import lenet
 import tensorflow as tf
-from dataset import get_datasets
-import sys
 from tf_data_pipeline import DataPipeline
 from patch_prediction_holder import SlidesPredictionHolder
 from tf_data_pipeline import EventFileListTracker
 import tensorflow.contrib.slim as slim
 import os
+import sys
 
 
 def train_by_epochs(data_pipeline, image_size, log_dir, n_of_classes, learning_rate, epochs, batch_size, global_iter):
@@ -116,5 +115,5 @@ def train(args):
 if __name__ == '__main__':
 	train(sys.argv[1:])
 
-# args = ["/Users/ahmetkucuk/Documents/Research/Medical/patches/", "/Users/ahmetkucuk/Documents/log_test/", 0.01, 32, 20, 20]
+# args = ["/Users/ahmetkucuk/Documents/Research/Medical/patches/", "/Users/ahmetkucuk/Documents/log_test/", 0.01, 32, 4, 20]
 # train(args)
