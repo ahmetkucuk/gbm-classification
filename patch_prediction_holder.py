@@ -1,7 +1,7 @@
 import numpy as np
 from PIL import Image
 import os
-
+import random
 
 class PatchPosition(object):
 
@@ -59,17 +59,18 @@ class SlidesPredictionHolder(object):
 			heatmap_image = [[0 for i in range(max_y+1)] for j in range(max_x+1)]
 			for position in predictions_by_patch_position.keys():
 				predictions = predictions_by_patch_position[position]
-
+				x = position.row
+				y = position.col
 				heatmap_image[x][y] = np.max(predictions) * 1.0
 				if np.max(predictions) > 0.9:
-					image[x][y] = np.max(predictions)
+					image[x][y] = 1
 				else:
 					image[x][y] = 0
 			print(heatmap_image)
-			img = Image.fromarray(np.array(image), 'RGB')
+			img = Image.fromarray((np.array(image) * 255).astype(np.uint8), 'P')
 			img.save(os.path.join(output_dir, slide + '_predictions_epochs_' + str(epochs) + '.png'))
 
 			heatmap_image = np.array(heatmap_image)
-			heatmap_image = ((heatmap_image - np.min(heatmap_image)) / (np.max(heatmap_image) - np.min(heatmap_image))*255)
-			heatmap_image = Image.fromarray(heatmap_image, 'RGB')
+			heatmap_image = (((heatmap_image - np.min(heatmap_image)) / (np.max(heatmap_image) - np.min(heatmap_image))*255)).astype(np.uint8)
+			heatmap_image = Image.fromarray(heatmap_image, 'P')
 			heatmap_image.save(os.path.join(output_dir, slide + '_heatmap_epochs_' + str(epochs) + '.png'))
