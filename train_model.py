@@ -56,7 +56,6 @@ def train_by_epochs(data_pipeline, image_size, log_dir, n_of_classes, learning_r
 		if not is_restored:
 			sess.run(tf.global_variables_initializer())
 
-		epoch_count = 1
 		coord = tf.train.Coordinator()
 		threads = tf.train.start_queue_runners(coord=coord)
 
@@ -70,16 +69,15 @@ def train_by_epochs(data_pipeline, image_size, log_dir, n_of_classes, learning_r
 
 			slides_predictions.set_predictions(classification_probs, labels, file_ids, rows, cols)
 
-			if (iter * batch_size) / n_of_patches > epoch_count:
-
-				epoch_count = (iter * batch_size) / n_of_patches
+			if global_iter % 100 == 0:
 
 				summary, ce, acc = sess.run([merged, cross_entropy, accuracy])
 				train_writer.add_summary(summary=summary, global_step=global_iter)
-				print("Epoches: " + str(epoch_count) + " training loss: " + str(ce))
-				print("Epoches: " + str(epoch_count) + " training acc: " + str(acc))
+				print("Global Iter: " + str(global_iter) + " training loss: " + str(ce))
+				print("Global Iter: " + str(global_iter) + " training acc: " + str(acc))
 
-			iter = iter + 1
+			iter += 1
+			global_iter += 1
 
 		save_path = saver.save(sess, log_dir + "model.ckpt", global_step=global_iter)
 		print("Model saved in file: %s" % save_path)
