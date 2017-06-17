@@ -66,7 +66,6 @@ class SlidesPredictionHolder(object):
 					image[x][y] = 1
 				else:
 					image[x][y] = 0
-			print(heatmap_image)
 			img = Image.fromarray((np.array(image) * 255).astype(np.uint8), 'P')
 			img.save(os.path.join(output_dir, slide + '_predictions_epochs_' + str(epochs) + '.png'))
 

@@ -5,6 +5,7 @@ import numpy as np
 from PIL import Image
 
 from sklearn.utils import shuffle
+from cifarnet_preprocessing import preprocess_image
 
 
 dataset_dir = "/Users/ahmetkucuk/Documents/Research/Medical/patches/"
@@ -151,7 +152,8 @@ class DataPipeline(object):
 
 		my_img = tf.image.decode_jpeg(value)
 		my_img.set_shape([256, 256, 3])
-		my_img = tf.image.per_image_standardization(my_img)
+		#my_img = tf.image.per_image_standardization(my_img)
+		my_img = preprocess_image(my_img, 224, 224, is_training=True)
 
 		self.batched_image = tf.train.batch([my_img], batch_size=batch_size)
 
@@ -201,7 +203,6 @@ def train_for_limited_epochs(input_numbers, epochs, batch_size, iter, checkpoint
 			if coord.should_stop():
 				break
 			batch = sess.run([batch_numbers])
-			print(batch)
 			iter += 1
 
 		save_path = saver.save(sess, checkpoint_path + "model.ckpt", global_step=iter)

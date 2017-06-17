@@ -1,4 +1,5 @@
 import lenet
+import alexnet
 import tensorflow as tf
 from tf_data_pipeline import DataPipeline
 from patch_prediction_holder import SlidesPredictionHolder
@@ -7,6 +8,7 @@ import tensorflow.contrib.slim as slim
 import os
 import sys
 
+
 def train_by_epochs(data_pipeline, image_size, log_dir, n_of_classes, learning_rate, epochs, batch_size, global_iter):
 
 	with tf.Session() as sess:
@@ -14,11 +16,11 @@ def train_by_epochs(data_pipeline, image_size, log_dir, n_of_classes, learning_r
 		optimizer = tf.train.AdamOptimizer(learning_rate)
 		tf.logging.set_verbosity(tf.logging.INFO)
 
-		network_fn = lenet.lenet
+		network_fn = alexnet.alexnet_v2
 		batched_image, batched_labels, batched_file_ids, batched_rows, batched_cols = data_pipeline.get_data()
 
 		batched_labels = slim.one_hot_encoding(labels=batched_labels, num_classes=n_of_classes)
-		batched_image = tf.image.resize_images(batched_image, size=[image_size, image_size])
+		#batched_image = tf.image.resize_images(batched_image, size=[image_size, image_size])
 		logits, end_points = network_fn(batched_image, num_classes=n_of_classes, is_training=True)
 		predictions = tf.nn.softmax(logits)
 		cross_entropy = tf.reduce_mean(
@@ -119,5 +121,5 @@ if __name__ == '__main__':
 		exit()
 	train(args)
 
-# args = ["/Users/ahmetkucuk/Documents/Research/Medical/patches/", "/Users/ahmetkucuk/Documents/log_test/", 0.01, 32, 4, 20, 2]
+# args = ["/Users/ahmetkucuk/Documents/Research/Medical/patches/", "/Users/ahmetkucuk/Documents/log_test/", 0.01, 256, 4, 20, 2]
 # train(args)
