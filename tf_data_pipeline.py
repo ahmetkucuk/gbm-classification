@@ -140,8 +140,8 @@ class DataPipeline(object):
 		self.n_of_patches = len(filenames)
 		filenames, metadata_labels, metadata_file_ids, metadata_rows, metadata_cols = shuffle(filenames, metadata_labels, metadata_file_ids, metadata_rows, metadata_cols)
 
-		image_queue = tf.FIFOQueue(capacity=100, dtypes=[tf.string], shapes=[[]])
-		metadata_queue = tf.FIFOQueue(capacity=100, dtypes=[tf.int32, tf.string, tf.int32, tf.int32], shapes=[[], [], [], []])
+		image_queue = tf.FIFOQueue(capacity=500, dtypes=[tf.string], shapes=[[]])
+		metadata_queue = tf.FIFOQueue(capacity=500, dtypes=[tf.int32, tf.string, tf.int32, tf.int32], shapes=[[], [], [], []])
 
 		image_enqueue_op = image_queue.enqueue_many([filenames])
 		metadata_enqueue_op = metadata_queue.enqueue_many([metadata_labels, metadata_file_ids, metadata_rows, metadata_cols])
