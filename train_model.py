@@ -13,7 +13,7 @@ def train_by_epochs(data_pipeline, image_size, log_dir, n_of_classes, learning_r
 
 	with tf.Session() as sess:
 
-		optimizer = tf.train.AdamOptimizer(learning_rate)
+		optimizer = tf.train.GradientDescentOptimizer(learning_rate)
 		tf.logging.set_verbosity(tf.logging.INFO)
 
 		network_fn = alexnet.alexnet_v2
