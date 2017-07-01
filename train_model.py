@@ -104,10 +104,11 @@ def train(args):
 	n_of_classes = int(args[6])
 	event_file_list_tracker = EventFileListTracker(dataset_dir)
 	iterations = 1
+	epoch_in_each_ckpt = 50
 	while epochs >= 0:
 		with tf.Graph().as_default():
 			data_pipeline = DataPipeline(event_file_list_tracker=event_file_list_tracker, batch_size=batch_size)
-			iter_count, slides_predictions = train_by_epochs(data_pipeline=data_pipeline, image_size=image_size, log_dir=log_dir, n_of_classes=n_of_classes, learning_rate=learning_rate, epochs=2, batch_size=batch_size, global_iter=iterations)
+			iter_count, slides_predictions = train_by_epochs(data_pipeline=data_pipeline, image_size=image_size, log_dir=log_dir, n_of_classes=n_of_classes, learning_rate=learning_rate, epochs=epoch_in_each_ckpt, batch_size=batch_size, global_iter=iterations)
 			event_file_list_tracker.filter_out_low_probs(slides_predictions)
 			iterations += iter_count
 			epochs -= 2
