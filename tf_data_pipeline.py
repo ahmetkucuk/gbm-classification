@@ -11,24 +11,35 @@ from cifarnet_preprocessing import preprocess_image
 dataset_dir = "/Users/ahmetkucuk/Documents/Research/Medical/patches/"
 
 
-def get_label_from_filename(filename):
+# def get_label_from_filename(filename):
+#
+# 	if "/AII/" in filename:
+# 		return 0
+# 	elif "/AIII/" in filename:
+# 		return 1
+# 	elif "/OII/" in filename:
+# 		return 2
+# 	elif "/OIII/" in filename:
+# 		return 3
+# 	elif "/OAII/" in filename:
+# 		return 4
+# 	elif "/OAIII/" in filename:
+# 		return 5
+# 	elif "/GBM/" in filename:
+# 		return 6
+# 	else:
+# 		return 7
 
-	if "/AII/" in filename:
-		return 0
-	elif "/AIII/" in filename:
-		return 1
-	elif "/OII/" in filename:
-		return 2
-	elif "/OIII/" in filename:
-		return 3
-	elif "/OAII/" in filename:
-		return 4
-	elif "/OAIII/" in filename:
-		return 5
-	elif "/GBM/" in filename:
-		return 6
+MUT = ["TCGA-CS-5393","TCGA-DB-5270","TCGA-DB-5273","TCGA-DB-5275","TCGA-DB-5276","TCGA-DB-5277","TCGA-DB-A4XB","TCGA-DB-A64X","TCGA-DH-5142","TCGA-DH-5143","TCGA-DH-A66B","TCGA-DH-A66D","TCGA-DU-5851","TCGA-DU-5855","TCGA-DU-6396","TCGA-DU-6542","TCGA-DU-7019","TCGA-DU-8163","TCGA-E1-A7YV","TCGA-FG-7636","TCGA-FG-8185","TCGA-FG-A6J3","TCGA-FG-A87N","TCGA-HT-7475","TCGA-HT-747"]
+WT = ["TCGA-DH-5140","TCGA-DU-5847","TCGA-DU-5852","TCGA-DU-5854","TCGA-DU-6402","TCGA-DU-6403","TCGA-DU-6405","TCGA-DU-6406","TCGA-DU-7006","TCGA-DU-7012","TCGA-DU-7013","TCGA-DU-8158","TCGA-DU-8161","TCGA-DU-8162","TCGA-DU-8165","TCGA-FG-A4MU","TCGA-FG-A4MW","TCGA-HT-7469","TCGA-HT-7860","TCGA-HT-8011","TCGA-HT-8019","TCGA-HT-8104","TCGA-HT-8110","TCGA-HT-8564","TCGA-HT-A4DS"]
+
+
+def get_label_from_filename(filename):
+	if filename in MUT:
+		return "MUT"
 	else:
-		return 7
+		return "WT"
+
 
 
 def get_metadata(filename):
@@ -39,7 +50,7 @@ def get_metadata(filename):
 	metadata_tuple = filename.split("_")
 
 	metadata.append(metadata_tuple[0])
-	image_segment = metadata_tuple[3]
+	image_segment = metadata_tuple[1]
 	index_i = image_segment.index("i")
 	index_j = image_segment.index("j")
 	index_dot = image_segment.index(".jpg")
@@ -210,48 +221,3 @@ def train_for_limited_epochs(input_numbers, epochs, batch_size, iter, checkpoint
 
 		coord.request_stop()
 		coord.join(threads)
-
-# input_length = 1000
-# batch_size = 20
-# epochs = 2
-# iter_count = (input_length/batch_size) * epochs
-# iter = 0
-# checkpoint_path = "/Users/ahmetkucuk/Documents/log_gbm/"
-# for k in range(100):
-# 	input_numbers = [k*1.0 for i in range(input_length)]
-# 	train_for_limited_epochs(input_numbers, epochs=epochs, batch_size=batch_size, iter=iter, checkpoint_path=checkpoint_path)
-# 	iter += iter_count
-
-# from tensorflow.python.tools.inspect_checkpoint import print_tensors_in_checkpoint_file
-#
-# checkpoint_path = "/Users/ahmetkucuk/Documents/log_gbm/"
-# checkpoint = tf.train.latest_checkpoint(checkpoint_path)
-# print_tensors_in_checkpoint_file(file_name=checkpoint, tensor_name='', all_tensors=True)
-
-# with tf.Session() as sess:
-#
-# 	biases = tf.Variable(tf.zeros([1]), name="biases")
-# 	sess.run(tf.global_variables_initializer())
-# 	coord = tf.train.Coordinator()
-# 	queue = tf.FIFOQueue(capacity=50, dtypes=[tf.float32], shapes=[[]])
-# 	numbers = queue.dequeue()
-# 	batch_numbers = tf.train.batch([numbers], batch_size=20)
-# 	batch_numbers = tf.multiply(batch_numbers, 10.0) + biases # simulate a network operation
-# 	#Need to change the content of the queue 10 times
-# 	for k in range(10):
-#
-# 		input_numbers = [k*1.0 for i in range(100)]
-#
-# 		queue_op = queue.enqueue_many([input_numbers])
-#
-# 		qr = tf.train.queue_runner.QueueRunner(queue, [queue_op]*5)
-# 		tf.train.queue_runner.add_queue_runner(qr)
-#
-# 		threads = tf.train.start_queue_runners(coord=coord)
-#
-# 		for step in xrange(100):
-# 			if coord.should_stop():
-# 				break
-# 			batch = sess.run([batch_numbers])
-# 			print(batch)
-# 		print("finished that batch")
