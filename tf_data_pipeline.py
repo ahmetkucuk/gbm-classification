@@ -46,9 +46,9 @@ def get_label_from_filename(filename):
 def get_metadata(filename):
 
 	metadata = []
-	metadata.append(get_label_from_filename(filename))
 	filename = filename.split("/")[-1]
 	metadata_tuple = filename.split("_")
+	metadata.append(get_label_from_filename(metadata_tuple[0]))
 
 	metadata.append(metadata_tuple[0])
 	image_segment = metadata_tuple[1]
