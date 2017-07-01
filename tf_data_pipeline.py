@@ -41,7 +41,6 @@ def get_label_from_filename(filename):
 		return "WT"
 
 
-
 def get_metadata(filename):
 
 	metadata = []
@@ -72,22 +71,14 @@ def get_metadata_from_list(filenames):
 
 
 def _get_filenames_and_classes(dataset_dir):
-	directories = []
-	class_names = []
-	for filename in os.listdir(dataset_dir):
-		path = os.path.join(dataset_dir, filename)
-		if os.path.isdir(path):
-			directories.append(path)
-			class_names.append(filename)
 
 	photo_filenames = []
-	for directory in directories:
-		for filename in os.listdir(directory):
-			if ".jpg" in filename:
-				path = os.path.join(directory, filename)
-				photo_filenames.append(path)
+	for filename in os.listdir(dataset_dir):
+		if ".jpg" in filename:
+			path = os.path.join(dataset_dir, filename)
+			photo_filenames.append(path)
 
-	return photo_filenames, sorted(class_names)
+	return photo_filenames
 
 
 class EventFileListTracker(object):
