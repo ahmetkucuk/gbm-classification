@@ -84,7 +84,7 @@ def _get_filenames_and_classes(dataset_dir):
 class EventFileListTracker(object):
 
 	def __init__(self, dataset_dir):
-		self.filenames, classes = _get_filenames_and_classes(dataset_dir=dataset_dir)
+		self.filenames = _get_filenames_and_classes(dataset_dir=dataset_dir)
 
 		metadatas = get_metadata_from_list(self.filenames)
 		self.metadata_labels = [i[0] for i in metadatas]
