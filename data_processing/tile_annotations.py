@@ -31,7 +31,7 @@ def files_in_dir(directory):
 
 def tile_annotation(image, output_dir, image_name, annotation, annotation_index):
 
-	image_name = image_name[0:12] + "annotation"  + str(annotation_index) +
+	image_name = image_name[0:12] + "annotation" + str(annotation_index) + "_"
 	x1 = annotation[0]
 	y1 = annotation[1]
 	x2 = annotation[2]
