@@ -142,6 +142,7 @@ class DataPipeline(object):
 	def __init__(self, event_file_list_tracker, batch_size):
 
 		filenames, metadata_labels, metadata_file_ids, metadata_rows, metadata_cols = event_file_list_tracker.get_data()
+		filenames, metadata_labels, metadata_file_ids, metadata_rows, metadata_cols = filenames[:20], metadata_labels[:20], metadata_file_ids[:20], metadata_rows[:20], metadata_cols[:20]
 		self.n_of_patches = len(filenames)
 		filenames, metadata_labels, metadata_file_ids, metadata_rows, metadata_cols = shuffle(filenames, metadata_labels, metadata_file_ids, metadata_rows, metadata_cols)
 
