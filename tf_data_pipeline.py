@@ -35,7 +35,8 @@ WT = ["TCGA-DH-5140","TCGA-DU-5847","TCGA-DU-5852","TCGA-DU-5854","TCGA-DU-6402"
 
 
 def get_label_from_filename(filename):
-	if filename in MUT:
+	print(filename)
+	if filename[:-11] in MUT:
 		print("in MUT")
 		return 0
 	else:
